@@ -6,7 +6,7 @@
 </head>
 <body>
   <div th:replace="fragments/header :: header"></div>
-  <form th:method="POST" th:action="@{/admin}" th:object="${user}">
+  <form th:method="POST" th:action="@{/admin/create}" th:object="${user}">
     <label for="firstName">Введите имя: </label>
     <input type="text" th:field="*{firstName}" id="firstName"/>
     <br/>

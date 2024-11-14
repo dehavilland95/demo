@@ -1,6 +1,7 @@
 package secutiry313.demo.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.*;
@@ -16,12 +17,13 @@ public class User implements UserDetails {
     @Column
     private String lastName;
     @Column(unique = true)
+    @Email
     private String email;
     @Column
     private int age;
     @Column
     private String password;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),

@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import secutiry313.demo.service.UserService;
 
 import java.util.Collection;
@@ -23,11 +24,12 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     @Autowired
     PasswordEncoder bCryptPasswordEncoder;
     @Override
+    @Transactional
     public Authentication authenticate(final Authentication authentication) throws AuthenticationException {
         final String email = authentication.getName();
         final String password = authentication.getCredentials().toString();
         UserDetails user = userService.loadUserByUsername(email);
-        String passwordFromSession = bCryptPasswordEncoder.encode(password);
+//        String passwordFromSession = bCryptPasswordEncoder.encode(password);
         String passwordFromBD = user.getPassword();
         if(!bCryptPasswordEncoder.matches(password, passwordFromBD)) {
             //bCryptPasswordEncoder.encode(password).equals(user.getPassword())

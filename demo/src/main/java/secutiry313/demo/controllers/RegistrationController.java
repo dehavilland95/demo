@@ -1,8 +1,10 @@
 package secutiry313.demo.controllers;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,9 +13,7 @@ import secutiry313.demo.models.Role;
 import secutiry313.demo.models.User;
 import secutiry313.demo.service.RoleService;
 import secutiry313.demo.service.UserService;
-
 import java.util.List;
-import java.util.Set;
 
 @Controller
 public class RegistrationController {
@@ -32,18 +32,17 @@ public class RegistrationController {
 
     @PostMapping("/registration")
     public String addUser(
-            @ModelAttribute("user") User user,
-            @RequestParam(required = false) String[] usersRoles,
+            @Valid @ModelAttribute("user") User user,
+            BindingResult result,
+            @RequestParam() String[] usersRoles,
             Model model) {
+        if (result.hasErrors()) {
+            return "registration";
+        }
         if (!userService.save(user, usersRoles)){
             model.addAttribute("usernameError", "Пользователь с таким именем уже существует");
             return "registration";
         }
-        Set<Role> roles = user.getRoles();
-        if (roles.stream().anyMatch(role -> role.getName().equals("ROLE_ADMIN"))) {
-            return "redirect:/admin";
-        } else {
-            return "redirect:/user";
-        }
+        return "redirect:/login";
     }
 }

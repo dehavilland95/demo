@@ -18,12 +18,12 @@
         </tr>
         <th:block th:each="user : ${users}">
             <tr>
-                <td><a th:href="@{/admin?id={id}(id=${user.getId()})}" th:text="${user.getFirstName() + ' ' + user.getLastName()}"></a></td>
+                <td><a th:href="@{/admin/show?id={id}(id=${user.getId()})}" th:text="${user.getFirstName() + ' ' + user.getLastName()}"></a></td>
                 <td th:text="${user.getEmail()}"></td>
                 <td th:text="${user.getAge()}"></td>
                 <td><a th:href="@{/admin/edit?id={id}(id=${user.getId()})}" th:text="Изменить"></a></td>
                 <td>
-                    <form th:method="DELETE" th:action="@{/admin?id={id}(id=${user.getId()})}">
+                    <form th:method="DELETE" th:action="@{/admin/delete?id={id}(id=${user.getId()})}">
                         <input type="submit" value="Удалить">
                     </form>
                 </td>

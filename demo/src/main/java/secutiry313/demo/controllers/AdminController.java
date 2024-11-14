@@ -36,9 +36,9 @@ public class AdminController {
         model.addAttribute("user", new User());
         return "admin/index";
     }
-    @GetMapping(params = "id")
+    @GetMapping("/show")
     public String show(
-            @RequestParam(name = "id", required = false, defaultValue = "0") long id,
+            @RequestParam(name = "id", required = false) long id,
             Model model){
         User user = userService.findById(id);
         model.addAttribute("user", user);
@@ -51,29 +51,29 @@ public class AdminController {
         model.addAttribute("user", new User());
         return "admin/new";
     }
-    @PostMapping()
+    @PostMapping("/create")
     public String create(@ModelAttribute("user") User user,  @RequestParam(required = false) String[] usersRoles){
         userService.save(user, usersRoles);
         return "redirect:/admin";
     }
     @GetMapping(value = "/edit", params = "id")
     public String edit(
-            @RequestParam(name = "id", required = false, defaultValue = "0") long id,
+            @RequestParam(name = "id", required = false) long id,
             Model model){
         List<Role> roles = roleService.getAll();
         model.addAttribute("allRoles", roles);
         model.addAttribute("user", userService.findById(id));
         return "admin/edit";
     }
-    @PatchMapping()
+    @PatchMapping("/update")
     public String update(
             @ModelAttribute("user") User user,
             @RequestParam(required = false) String[] usersRoles){
         userService.update(user, usersRoles);
         return "redirect:/admin";
     }
-    @DeleteMapping(params = "id")
-    public String delete(@RequestParam(name = "id", required = false, defaultValue = "0") long id){
+    @DeleteMapping(name = "/delete", params = "id")
+    public String delete(@RequestParam(name = "id", required = false) long id){
         userService.delete(id);
         return "redirect:/admin";
     }
