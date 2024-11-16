@@ -1,6 +1,5 @@
 package secutiry313.demo.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,17 +10,20 @@ import secutiry313.demo.models.Role;
 import secutiry313.demo.models.User;
 import secutiry313.demo.repository.UserRepository;
 import secutiry313.demo.repository.RoleRepository;
-
 import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserDetailsService, UserService {
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    RoleRepository roleRepository;
-    @Autowired
-    PasswordEncoder bCryptPasswordEncoder;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder bCryptPasswordEncoder;
+
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository,
+                    PasswordEncoder bCryptPasswordEncoder){
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
 
     @Override
     @Transactional(readOnly = true)

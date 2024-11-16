@@ -72,7 +72,7 @@ public class AdminController {
         userService.update(user, usersRoles);
         return "redirect:/admin";
     }
-    @DeleteMapping(name = "/delete", params = "id")
+    @DeleteMapping("/delete")
     public String delete(@RequestParam(name = "id", required = false) long id){
         userService.delete(id);
         return "redirect:/admin";

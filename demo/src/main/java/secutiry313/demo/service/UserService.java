@@ -2,7 +2,6 @@ package secutiry313.demo.service;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import secutiry313.demo.models.Role;
 import secutiry313.demo.models.User;
 
 import java.util.List;
